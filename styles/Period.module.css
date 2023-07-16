@@ -1,0 +1,7 @@
+.period:focus {
+  font-weight: bold;
+}
+
+.period {
+  cursor: pointer;
+}

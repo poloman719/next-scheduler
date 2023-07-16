@@ -1,0 +1,20 @@
+.editor {
+  background-color: #111A28;
+  min-height: calc(100vh - 150px);
+  padding: 25px;
+  width: 30vw;
+}
+
+.editor h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}

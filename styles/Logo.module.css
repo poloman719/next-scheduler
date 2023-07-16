@@ -1,0 +1,34 @@
+.boxes {
+  display: flex;
+  margin-left: 135px;
+  height: 75px;
+  margin-right: 16.25px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.boxes div {
+  background-color: #708099;
+}
+
+.a {
+  width: 25px;
+  margin-right: 5px;
+}
+
+.b {
+  width: 12.5px;
+  margin-right: 3.5px;
+}
+
+.c {
+  width: 5.25px;
+}
+
+.logo h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
