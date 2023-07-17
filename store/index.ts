@@ -1,12 +1,19 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import type Task from "@/interfaces/task";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type ContextMenu from "@/interfaces/context-menu";
 
-const initialState: Task[] = [];
+const initialTasks: Task[] = [];
+
+const initialContextMenu: ContextMenu = {
+  show: false,
+  x: 0,
+  y: 0,
+};
 
 const taskSlice = createSlice({
   name: "task",
-  initialState,
+  initialState: initialTasks,
   reducers: {
     set: (state, action: PayloadAction<Task[]>) => action.payload,
     add: (state) => {
@@ -30,7 +37,11 @@ const taskSlice = createSlice({
       if (lastTask) {
         fetch("/api", {
           method: "POST",
-          body: JSON.stringify({ action: "REPLACE", task: lastTask, id: lastTask.id }),
+          body: JSON.stringify({
+            action: "REPLACE",
+            task: lastTask,
+            id: lastTask.id,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -53,7 +64,11 @@ const taskSlice = createSlice({
       );
       fetch("/api", {
         method: "POST",
-        body: JSON.stringify({ action: "REPLACE", task: action.payload, id: action.payload.id }),
+        body: JSON.stringify({
+          action: "REPLACE",
+          task: action.payload,
+          id: action.payload.id,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -62,8 +77,29 @@ const taskSlice = createSlice({
   },
 });
 
-const store = configureStore({ reducer: taskSlice.reducer });
+const contextMenuSlice = createSlice({
+  name: "context-menu",
+  initialState: initialContextMenu,
+  reducers: {
+    set: (state, action: PayloadAction<ContextMenu>) => action.payload,
+    toggle: (state) => {
+      state.show = !state.show;
+    },
+    setPos: (state, action: PayloadAction<{ x: number; y: number }>) => {
+      const { x, y } = action.payload;
+      state = { show: state.show, x, y };
+    },
+  },
+});
+
+const store = configureStore({
+  reducer: {
+    task: taskSlice.reducer,
+    ctxMenu: contextMenuSlice.reducer
+  },
+});
 
 export const taskActions = taskSlice.actions;
+export const ctxMenuActions = contextMenuSlice.actions;
 
 export default store;

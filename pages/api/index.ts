@@ -11,7 +11,7 @@ export default async function handler(
   const data = req.body;
 
   const client = await MongoClient.connect(
-    "mongodb+srv://poloman:stupido@cluster0.shuvold.mongodb.net/my_database?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.shuvold.mongodb.net/my_database?retryWrites=true&w=majority`
   );
 
   const db = client.db();

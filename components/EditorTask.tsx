@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { taskActions } from '@/store';
 import useSkipEffect from '@/hooks/use-skip-effect';
+import { MouseEvent } from 'react';
 
 const EditorTask: React.FC<{ text: string, start: time, end: time, below?: boolean, ghost?: boolean, id: Number }> = (props) => {
   const dispatch = useDispatch();
@@ -48,8 +49,15 @@ const EditorTask: React.FC<{ text: string, start: time, end: time, below?: boole
     setText(text)
   }
 
+  const contextMenuHandler = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+    console.log('context-menu for task')
+    e.preventDefault()
+
+    const { pageX, pageY } = e
+  }
+
   return <>
-    <div className={taskClass} spellCheck='false'>
+    <div className={taskClass} spellCheck='false' onContextMenu={contextMenuHandler}>
       <div className={style.text} onFocus={onFocusHandler} contentEditable suppressContentEditableWarning onBlur={onBlurHandler}>{props.text || 'type to add task'}</div>
       <div className={style.timeContainer}>
         <Time start={props.start} end={props.end} update={onUpdateTimeHandler} />

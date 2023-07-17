@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const Editor: React.FC<{ tasks: Task[] }> = (props) => {
   const dispatch = useDispatch()
-  const tasks = useSelector((state: Task[]) => state);
+  const tasks = useSelector((state: { task: Task[] }) => state.task);
 
   useEffect(() => {
     if (props.tasks.length) {
